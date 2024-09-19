@@ -2,27 +2,33 @@
 // Created by gabonm7 on 17/09/24.
 //
 
+#include "measures.h"
 #include <iostream>
-#include "LinkedList.h"
-#include "BinaryTree.h"
+#include <vector>
+#include <cstdlib>
+
 
 int main() {
-  LinkedList list;
-  list.append(5);
-  list.append(15);
-  list.append(10);
+  Measures medidas;
 
-  list.deleteNode(1);
-  list.deleteNode(1);
+  // Crear un conjunto de datos de prueba
+  std::vector<int> data;
+  int N = 1000;  // Número de elementos
+  for (int i = 0; i < N; ++i) {
+    data.push_back(rand() % 100);  // Generar valores aleatorios
+  }
 
-  BinaryTree tree;
-  tree.insert(5);
-  tree.insert(10);
-  tree.insert(15);
-  tree.insert(20);
-  tree.insert(25);
-  tree.insert(30);
-  tree.insert(35);
-  tree.insert(3);
+  // Medir tiempo de BubbleSort
+  double tiempoBubbleSort = medidas.medirTiempoBubbleSort(data);
+  std::cout << "Tiempo de BubbleSort: " << tiempoBubbleSort << " segundos." << std::endl;
+
+  // Medir tiempo de búsqueda en Sorted Linked List (caso promedio)
+  double tiempoBusquedaLinkedList = medidas.medirTiempoBusquedaSortedLinkedList(data, 3);
+  std::cout << "Tiempo de búsqueda en Linked List (caso promedio): " << tiempoBusquedaLinkedList << " segundos." << std::endl;
+
+  // Medir tiempo de inserción en Binary Search Tree (caso promedio)
+  double tiempoBusquedaBST = medidas.medirTiempoBusquedaBST(data, 3);
+  std::cout << "Tiempo de búsqueda en Binary Search Tree (caso promedio): " << tiempoBusquedaBST << " segundos." << std::endl;
+
   return 0;
 }

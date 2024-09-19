@@ -6,21 +6,13 @@
 #define LINKEDLIST_H
 
 
+#include <vector>
 
-#include "nodeLL.h"
 class LinkedList {
-private:
-    nodeLL* cabeza;
-    int index;
-
 public:
-    LinkedList() : cabeza(nullptr), index(0) {}
-    ~LinkedList();
-    int getPos(int position);
-    void setPos(int position, int value);
-    void append(int value);
-    void deleteNode(int posicion);
-
+    // Búsqueda en un array ordenado
+    int search(const std::vector<int>& array, int number);
 };
+
 #include "LinkedList.cpp"
 #endif //LINKEDLIST_H

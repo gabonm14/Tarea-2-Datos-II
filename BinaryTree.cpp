@@ -4,50 +4,50 @@
 
 #include "BinaryTree.h"
 
-void BinaryTree::insert(int valor) {
-    root= insert(root, valor);
-}
+#include "BinaryTree.h"
 
-nodeBT* BinaryTree::insert(nodeBT* node, int valor) {
-    if (!node) {
-        return new nodeBT(valor);
-    }
 
-    if (valor < node->getData()) {
-        node->setIzq(insert(node->getIzq(), valor));
-    } else if (valor > node->getData()) {
-        node->setDer(insert(node->getDer(), valor));
-    }
+Node* BinarySearchTree::insert(Node* node, int key) {
+    // If the tree is empty, return a new node
+    if (node == nullptr)
+        return new Node(key);
 
+    // If the key is already present in the tree,
+    // return the node
+    if (node->key == key)
+        return node;
+
+    // Otherwise, recur down the tree/ If the key
+    // to be inserted is greater than the node's key,
+    // insert it in the right subtree
+    if (node->key < key)
+        node->right = insert(node->right, key);
+
+    // If the key to be inserted is smaller than
+    // the node's key,insert it in the left subtree
+    else
+        node->left = insert(node->left, key);
+
+    // Return the (unchanged) node pointer
     return node;
 }
 
-bool BinaryTree::search(nodeBT* node, int valor) const{
-    if (!node) {
-        return false;
+void BinarySearchTree::inorder(Node* root) {
+    if (root != nullptr) {
+        inorder(root->left);
+        cout << root->key << " ";
+        inorder(root->right);
     }
-
-    if (valor == node->getData()) {
-        return true;
-    } else if (valor < node->getData()) {
-        return search(node->getIzq(), valor);
-    } else {
-        return search(node->getDer(), valor);
-    }
-
 }
+Node* BinarySearchTree::search(Node* root, int key) {
+    // Caso base: si el árbol está vacío o el valor está en la raíz
+    if (root == nullptr || root->key == key)
+        return root;
 
-void BinaryTree::deleteTree(nodeBT* node){
-    if (!node) {
-        return;
-    }
+    // Si el valor es mayor que la clave de la raíz, buscar en el subárbol derecho
+    if (root->key < key)
+        return search(root->right, key);
 
-    deleteTree(node->getIzq());
-    deleteTree(node->getDer());
-    delete node;
-}
-
-nodeBT* BinaryTree::getRoot() const {
-
-    return root;
+    // Si el valor es menor que la clave de la raíz, buscar en el subárbol izquierdo
+    return search(root->left, key);
 }
